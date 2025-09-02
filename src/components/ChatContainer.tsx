@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Message } from '../types';
-import { EnhancedResponseService } from '../services/enhancedResponseService';
+import { AIService } from '../services/aiService';
+import { getResponse } from '../data/responses';
 import { ChatHeader } from './ChatHeader';
 import { MessageBubble } from './MessageBubble';
 import { MessageInput } from './MessageInput';
@@ -9,17 +10,16 @@ import { TypingIndicator } from './TypingIndicator';
 import { SetupInstructions } from './SetupInstructions';
 
 export const ChatContainer: React.FC = () => {
-  const enhancedResponseService = EnhancedResponseService.getInstance();
+  const aiService = AIService.getInstance();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "Hello! I'm your AI-powered J&K College Selection Assistant. I'm integrated with ChatGPT, Gemini, and J&K government data to provide you with the most accurate and up-to-date information about colleges, courses, admissions, and scholarships in Jammu & Kashmir. What would you like to know about your educational journey?",
+      text: "Hello! I'm your AI-powered J&K College Selection Assistant. I'm integrated with Gemini AI to provide you with intelligent guidance about colleges, courses, admissions, and scholarships in Jammu & Kashmir. What would you like to know about your educational journey?",
       isUser: false,
       timestamp: new Date()
     }
   ]);
   const [isTyping, setIsTyping] = useState(false);
-  const [currentAISource, setCurrentAISource] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -43,16 +43,16 @@ export const ChatContainer: React.FC = () => {
     setIsTyping(true);
 
     try {
-      // Get enhanced response using AI services and J&K data
-      const result = await enhancedResponseService.getEnhancedResponse(messageText);
-      setCurrentAISource(result.source);
+      // Try to get AI response, fallback to local responses
+      const result = await aiService.getResponse(messageText);
       
-      // Add source indicator to response if using AI
       let responseText = result.response;
-      if (result.source === 'ai' && result.hasJKData) {
-        responseText += '\n\n*Response enhanced with J&K government data and AI analysis*';
-      } else if (result.source === 'ai') {
-        responseText += '\n\n*Response generated using AI assistance*';
+      
+      // If AI failed, use local fallback
+      if (result.source === 'fallback') {
+        responseText = getResponse(messageText);
+      } else {
+        responseText += '\n\n*Response generated using Gemini AI*';
       }
 
       const botMessage: Message = {
@@ -67,9 +67,12 @@ export const ChatContainer: React.FC = () => {
     } catch (error) {
       console.error('Error getting response:', error);
       
+      // Use local fallback response
+      const fallbackResponse = getResponse(messageText);
+      
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "I apologize, but I'm experiencing some technical difficulties. Please try again in a moment. In the meantime, I can still help you with basic information about colleges in J&K.",
+        text: fallbackResponse,
         isUser: false,
         timestamp: new Date()
       };

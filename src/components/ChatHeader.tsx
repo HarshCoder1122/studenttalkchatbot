@@ -27,8 +27,8 @@ export const ChatHeader: React.FC = () => {
         </div>
       </div>
       <p className="text-blue-100 text-sm leading-relaxed">
-        Get AI-powered guidance with real-time J&K government data for college selection, 
-        admission requirements, scholarships, and career planning. Powered by ChatGPT and Gemini.
+        Get AI-powered guidance for college selection, admission requirements, 
+        scholarships, and career planning. Powered by Gemini AI.
       </p>
     </div>
   );

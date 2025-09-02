@@ -1,11 +1,4 @@
-import OpenAI from 'openai';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-
-// Initialize OpenAI only if API key is available
-const openai = import.meta.env.VITE_OPENAI_API_KEY ? new OpenAI({
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true
-}) : null;
 
 // Initialize Gemini only if API key is available
 const genAI = import.meta.env.VITE_GEMINI_API_KEY ? new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY) : null;
@@ -25,43 +18,23 @@ export class AIService {
     return AIService.instance;
   }
 
-  async getChatGPTResponse(message: string, context: string = ''): Promise<string> {
-    try {
-      if (!openai) {
-        throw new Error('OpenAI API key not configured');
-      }
-
-      const systemPrompt = `You are a helpful college selection assistant for students from Jammu & Kashmir. 
-      Provide accurate, helpful information about colleges, courses, admissions, and career guidance.
-      Focus on colleges in J&K and popular destinations for J&K students.
-      ${context ? `Additional context: ${context}` : ''}`;
-
-      const completion = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: message }
-        ],
-        max_tokens: 500,
-        temperature: 0.7
-      });
-
-      return completion.choices[0]?.message?.content || 'Sorry, I could not generate a response.';
-    } catch (error) {
-      console.error('ChatGPT API error:', error);
-      throw new Error('Failed to get response from ChatGPT');
-    }
-  }
-
-  async getGeminiResponse(message: string, context: string = ''): Promise<string> {
+  async getGeminiResponse(message: string): Promise<string> {
     try {
       if (!this.geminiModel) {
         throw new Error('Gemini API key not configured');
       }
 
-      const prompt = `You are a college selection assistant for J&K students. 
-      Provide helpful guidance about colleges, courses, and admissions.
-      ${context ? `Context: ${context}` : ''}
+      const prompt = `You are a helpful college selection assistant specifically for students from Jammu & Kashmir (J&K). 
+      Your role is to provide accurate, helpful information about:
+      - Colleges and universities in J&K
+      - Course options and eligibility criteria
+      - Admission processes and requirements
+      - Career guidance and stream selection
+      - Scholarship opportunities
+      - Study tips and preparation strategies
+      
+      Always be encouraging, informative, and focus on helping J&K students make informed educational decisions.
+      Keep responses conversational but informative, and use relevant emojis to make the content engaging.
       
       User question: ${message}`;
 
@@ -74,28 +47,19 @@ export class AIService {
     }
   }
 
-  async getHybridResponse(message: string, context: string = ''): Promise<{
+  async getResponse(message: string): Promise<{
     response: string;
-    source: 'chatgpt' | 'gemini' | 'fallback';
+    source: 'gemini' | 'fallback';
   }> {
-    // Try ChatGPT first
     try {
-      const chatgptResponse = await this.getChatGPTResponse(message, context);
-      return { response: chatgptResponse, source: 'chatgpt' };
+      const geminiResponse = await this.getGeminiResponse(message);
+      return { response: geminiResponse, source: 'gemini' };
     } catch (error) {
-      console.log('ChatGPT failed, trying Gemini...');
-      
-      // Fallback to Gemini
-      try {
-        const geminiResponse = await this.getGeminiResponse(message, context);
-        return { response: geminiResponse, source: 'gemini' };
-      } catch (error) {
-        console.log('Both AI services failed, using fallback...');
-        return { 
-          response: 'I apologize, but I\'m having trouble connecting to my AI services right now. Please try again in a moment, or ask me about specific colleges in J&K and I\'ll do my best to help with the information I have available.',
-          source: 'fallback'
-        };
-      }
+      console.log('Gemini failed, using fallback...');
+      return { 
+        response: 'I apologize, but I\'m having trouble connecting to my AI service right now. Please try again in a moment, or ask me about specific colleges in J&K and I\'ll do my best to help with the information I have available.',
+        source: 'fallback'
+      };
     }
   }
 }
