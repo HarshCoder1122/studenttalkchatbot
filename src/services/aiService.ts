@@ -8,7 +8,7 @@ export class AIService {
   private geminiModel: any;
 
   private constructor() {
-    this.geminiModel = genAI ? genAI.getGenerativeModel({ model: "gemini-pro" }) : null;
+    this.geminiModel = genAI ? genAI.getGenerativeModel({ model: "gemini-1.5-flash" }) : null;
   }
 
   public static getInstance(): AIService {
