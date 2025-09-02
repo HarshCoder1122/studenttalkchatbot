@@ -46,14 +46,9 @@ export const ChatContainer: React.FC = () => {
       // Try to get AI response, fallback to local responses
       const result = await aiService.getResponse(messageText);
       
-      let responseText = result.response;
-      
-      // If AI failed, use local fallback
-      if (result.source === 'fallback') {
-        responseText = getResponse(messageText);
-      } else {
-        responseText += '\n\n*Response generated using Gemini AI*';
-      }
+      let responseText = result.source === 'fallback' 
+        ? getResponse(messageText) 
+        : result.response;
 
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
