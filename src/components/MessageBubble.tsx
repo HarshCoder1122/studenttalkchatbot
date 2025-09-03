@@ -65,12 +65,12 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   };
 
   return (
-    <div className={`flex gap-3 mb-6 ${message.isUser ? 'flex-row-reverse' : 'flex-row'}`}>
+    <div className={`flex gap-3 mb-6 ${message.isUser ? 'flex-row-reverse' : 'flex-row'} animate-slide-up`}>
       <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
         message.isUser 
-          ? 'bg-blue-600 text-white' 
-          : 'bg-gradient-to-br from-green-500 to-emerald-600 text-white'
-      }`}>
+          ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg animate-bounce-subtle' 
+          : 'bg-gradient-to-br from-emerald-500 to-green-600 text-white shadow-lg animate-float'
+      } transition-all duration-300 hover:scale-110`}>
         {message.isUser ? (
           <User className="w-4 h-4" />
         ) : (
@@ -81,14 +81,14 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
       <div className={`max-w-[75%] ${message.isUser ? 'text-right' : 'text-left'}`}>
         <div className={`inline-block p-4 rounded-2xl shadow-sm ${
           message.isUser
-            ? 'bg-blue-600 text-white rounded-br-md'
-            : 'bg-white text-gray-800 rounded-bl-md border border-gray-200'
-        }`}>
+            ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-br-md shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300'
+            : 'bg-white/90 backdrop-blur-sm text-gray-800 rounded-bl-md border border-gray-200/50 shadow-lg hover:shadow-xl transform hover:scale-[1.01] transition-all duration-300'
+        } animate-message-appear`}>
           <div className="text-sm leading-relaxed whitespace-pre-wrap">
             {message.isUser ? message.text : formatMessage(message.text)}
           </div>
         </div>
-        <div className={`text-xs text-gray-500 mt-1 ${message.isUser ? 'text-right' : 'text-left'}`}>
+        <div className={`text-xs text-gray-500 mt-1 ${message.isUser ? 'text-right' : 'text-left'} animate-fade-in-delayed`}>
           {formatTime(message.timestamp)}
         </div>
       </div>
