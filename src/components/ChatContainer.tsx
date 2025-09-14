@@ -88,6 +88,15 @@ export const ChatContainer: React.FC = () => {
       </div>
       
       <div className="flex-1 overflow-y-auto p-3 sm:p-6 bg-gradient-to-b from-gray-50/50 to-white/80 backdrop-blur-sm">
+        {/* University Background Image */}
+        <div className="absolute inset-0 opacity-5">
+          <img 
+            src="https://images.pexels.com/photos/207692/pexels-photo-207692.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            alt="University Campus"
+            className="w-full h-full object-cover blur-sm"
+          />
+        </div>
+        
         <div className="space-y-4">
           {messages.map((message) => (
             <MessageBubble key={message.id} message={message} />

@@ -10,8 +10,12 @@ export const ChatHeader: React.FC = () => {
       
       <div className="relative z-10">
       <div className="flex items-center gap-3 mb-2">
-        <div className="p-3 bg-white/20 rounded-full backdrop-blur-sm border border-white/30 animate-float">
-          <GraduationCap className="w-6 h-6 animate-pulse" />
+        <div className="p-2 bg-white/20 rounded-full backdrop-blur-sm border border-white/30 animate-float">
+          <img 
+            src="/Aspirofy logo.png" 
+            alt="Aspirofy Logo" 
+            className="w-8 h-8 sm:w-10 sm:h-10 animate-pulse"
+          />
         </div>
         <div>
           <h1 className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent animate-fade-in">
