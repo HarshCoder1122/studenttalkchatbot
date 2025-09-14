@@ -93,7 +93,7 @@ export const ChatContainer: React.FC = () => {
           <img 
             src="https://images.pexels.com/photos/207692/pexels-photo-207692.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             alt="University Campus"
-            className="w-full h-full object-cover blur-sm"
+            className="w-full h-full object-cover blur-none"
           />
         </div>
         

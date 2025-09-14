@@ -12,7 +12,7 @@ function App() {
           <img 
             src="https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             alt="University Background"
-            className="w-full h-full object-cover blur-3xl"
+            className="w-full h-full object-cover blur-sm"
           />
         </div>
         
