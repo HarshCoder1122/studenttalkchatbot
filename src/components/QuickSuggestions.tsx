@@ -11,15 +11,15 @@ export const QuickSuggestions: React.FC<QuickSuggestionsProps> = ({
   disabled = false 
 }) => {
   return (
-    <div className="p-6 bg-gradient-to-r from-gray-50/80 to-blue-50/80 backdrop-blur-sm border-t border-gray-200/50">
-      <p className="text-sm text-gray-700 mb-4 font-semibold animate-fade-in">✨ Quick suggestions:</p>
-      <div className="flex flex-wrap gap-2">
+    <div className="p-3 sm:p-6 bg-gradient-to-r from-gray-50/80 to-blue-50/80 backdrop-blur-sm border-t border-gray-200/50">
+      <p className="text-xs sm:text-sm text-gray-700 mb-3 sm:mb-4 font-semibold animate-fade-in">✨ Quick suggestions:</p>
+      <div className="flex flex-wrap gap-1.5 sm:gap-2">
         {quickSuggestions.map((suggestion, index) => (
           <button
             key={index}
             onClick={() => onSuggestionClick(suggestion.text)}
             disabled={disabled}
-            className="px-4 py-2 bg-white/90 backdrop-blur-sm text-gray-700 text-sm rounded-full 
+            className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white/90 backdrop-blur-sm text-gray-700 text-xs sm:text-sm rounded-full 
                      border border-gray-300/50 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 
                      hover:border-blue-400 hover:text-blue-700 
                      transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed

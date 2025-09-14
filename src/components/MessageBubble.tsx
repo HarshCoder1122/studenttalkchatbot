@@ -65,26 +65,26 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   };
 
   return (
-    <div className={`flex gap-3 mb-6 ${message.isUser ? 'flex-row-reverse' : 'flex-row'} animate-slide-up`}>
-      <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+    <div className={`flex gap-2 sm:gap-3 mb-4 sm:mb-6 ${message.isUser ? 'flex-row-reverse' : 'flex-row'} animate-slide-up`}>
+      <div className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center ${
         message.isUser 
           ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg animate-bounce-subtle' 
           : 'bg-gradient-to-br from-emerald-500 to-green-600 text-white shadow-lg animate-float'
       } transition-all duration-300 hover:scale-110`}>
         {message.isUser ? (
-          <User className="w-4 h-4" />
+          <User className="w-3 h-3 sm:w-4 sm:h-4" />
         ) : (
-          <Bot className="w-4 h-4" />
+          <Bot className="w-3 h-3 sm:w-4 sm:h-4" />
         )}
       </div>
       
-      <div className={`max-w-[75%] ${message.isUser ? 'text-right' : 'text-left'}`}>
-        <div className={`inline-block p-4 rounded-2xl shadow-sm ${
+      <div className={`max-w-[85%] sm:max-w-[75%] ${message.isUser ? 'text-right' : 'text-left'}`}>
+        <div className={`inline-block p-3 sm:p-4 rounded-2xl shadow-sm ${
           message.isUser
             ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-br-md shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300'
             : 'bg-white/90 backdrop-blur-sm text-gray-800 rounded-bl-md border border-gray-200/50 shadow-lg hover:shadow-xl transform hover:scale-[1.01] transition-all duration-300'
         } animate-message-appear`}>
-          <div className="text-sm leading-relaxed whitespace-pre-wrap">
+          <div className="text-xs sm:text-sm leading-relaxed whitespace-pre-wrap">
             {message.isUser ? message.text : formatMessage(message.text)}
           </div>
         </div>

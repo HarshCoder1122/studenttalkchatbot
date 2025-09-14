@@ -80,14 +80,14 @@ export const ChatContainer: React.FC = () => {
   const showSuggestions = messages.length <= 1 && !isTyping;
 
   return (
-    <div className="flex flex-col h-screen max-w-4xl mx-auto bg-white/95 backdrop-blur-xl shadow-2xl rounded-3xl overflow-hidden border border-white/20 animate-fade-in">
+    <div className="flex flex-col h-screen max-w-4xl mx-auto bg-white/95 backdrop-blur-xl shadow-2xl rounded-none sm:rounded-3xl overflow-hidden border-0 sm:border border-white/20 animate-fade-in">
       <ChatHeader />
       
-      <div className="px-6 pt-4">
+      <div className="px-3 sm:px-6 pt-4">
         <SetupInstructions />
       </div>
       
-      <div className="flex-1 overflow-y-auto p-6 bg-gradient-to-b from-gray-50/50 to-white/80 backdrop-blur-sm">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-6 bg-gradient-to-b from-gray-50/50 to-white/80 backdrop-blur-sm">
         <div className="space-y-4">
           {messages.map((message) => (
             <MessageBubble key={message.id} message={message} />

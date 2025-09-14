@@ -14,28 +14,31 @@ export const ChatHeader: React.FC = () => {
           <GraduationCap className="w-6 h-6 animate-pulse" />
         </div>
         <div>
-          <h1 className="text-xl font-bold bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent animate-fade-in">
-            J&K College Selection Assistant
+          <h1 className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent animate-fade-in">
+            Aspirofy
           </h1>
-          <div className="flex items-center gap-1 text-blue-100 text-sm">
+          <div className="flex items-center gap-1 text-blue-100 text-xs sm:text-sm">
             <MapPin className="w-4 h-4 animate-bounce" />
-            <span>Guiding J&K Students</span>
+            <span className="hidden sm:inline">AI College Selection Assistant</span>
+            <span className="sm:hidden">AI Assistant</span>
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-4 mb-3">
-        <div className="flex items-center gap-1 text-blue-100 text-xs">
+      <div className="flex items-center gap-2 sm:gap-4 mb-3">
+        <div className="flex items-center gap-1 text-blue-100 text-xs sm:text-sm">
           <Zap className="w-3 h-3 animate-pulse" />
-          <span>AI-Powered</span>
+          <span className="hidden sm:inline">AI-Powered</span>
+          <span className="sm:hidden">AI</span>
         </div>
-        <div className="flex items-center gap-1 text-blue-100 text-xs">
+        <div className="flex items-center gap-1 text-blue-100 text-xs sm:text-sm">
           <Database className="w-3 h-3 animate-pulse delay-300" />
-          <span>Smart Guidance</span>
+          <span className="hidden sm:inline">Smart Guidance</span>
+          <span className="sm:hidden">Smart</span>
         </div>
       </div>
-      <p className="text-blue-100 text-sm leading-relaxed">
-        Get AI-powered guidance for college selection, admission requirements, 
-        scholarships, and career planning. Powered by Gemini AI.
+      <p className="text-blue-100 text-xs sm:text-sm leading-relaxed">
+        <span className="hidden sm:inline">Get AI-powered guidance for college selection, admission requirements, scholarships, and career planning.</span>
+        <span className="sm:hidden">Your AI-powered college selection guide.</span>
       </p>
       </div>
     </div>
