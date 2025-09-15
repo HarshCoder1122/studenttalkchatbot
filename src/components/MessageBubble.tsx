@@ -16,38 +16,33 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   };
 
   const formatMessage = (text: string) => {
-    // Split by double newlines to create paragraphs
     const paragraphs = text.split('\n\n');
     
     return paragraphs.map((paragraph, index) => {
-      // Handle lists and bullet points
       const lines = paragraph.split('\n');
       
       return (
-        <div key={index} className={index > 0 ? 'mt-4' : ''}>
+        <div key={index} className={index > 0 ? 'mt-3' : ''}>
           {lines.map((line, lineIndex) => {
-            // Handle bold text
             const parts = line.split(/(\*\*.*?\*\*)/g);
             const formattedLine = parts.map((part, partIndex) => {
               if (part.startsWith('**') && part.endsWith('**')) {
-                return <strong key={partIndex}>{part.slice(2, -2)}</strong>;
+                return <strong key={partIndex} className="font-semibold text-gray-900">{part.slice(2, -2)}</strong>;
               }
               return part;
             });
 
-            // Check if it's a list item
             if (line.trim().startsWith('-') || line.trim().startsWith('•')) {
               return (
-                <div key={lineIndex} className="ml-4 mb-1">
+                <div key={lineIndex} className="ml-4 mb-1 text-gray-700">
                   {formattedLine}
                 </div>
               );
             }
 
-            // Check if it's an emoji header
-            if (line.trim().match(/^[🎓💼🔬💰📅📝💡🌟📈💬🏥📚📍📋🎯🌟]/)) {
+            if (line.trim().match(/^[🎓💼🔬💰📅📝💡🌟📈💬🏥📚📍📋🎯]/)) {
               return (
-                <div key={lineIndex} className="font-semibold text-blue-800 mb-2 mt-3 first:mt-0">
+                <div key={lineIndex} className="font-semibold text-blue-800 mb-2 mt-2 first:mt-0">
                   {formattedLine}
                 </div>
               );
@@ -65,30 +60,32 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   };
 
   return (
-    <div className={`flex gap-2 sm:gap-3 mb-4 sm:mb-6 ${message.isUser ? 'flex-row-reverse' : 'flex-row'} animate-slide-up`}>
-      <div className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center ${
+    <div className={`flex gap-3 mb-4 ${message.isUser ? 'flex-row-reverse' : 'flex-row'} animate-fade-in`}>
+      {/* Avatar */}
+      <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
         message.isUser 
-          ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg animate-bounce-subtle' 
-          : 'bg-gradient-to-br from-emerald-500 to-green-600 text-white shadow-lg animate-float'
-      } transition-all duration-300 hover:scale-110`}>
+          ? 'bg-blue-600 text-white' 
+          : 'bg-gray-100 text-gray-600 border border-gray-200'
+      }`}>
         {message.isUser ? (
-          <User className="w-3 h-3 sm:w-4 sm:h-4" />
+          <User className="w-4 h-4" />
         ) : (
-          <Bot className="w-3 h-3 sm:w-4 sm:h-4" />
+          <Bot className="w-4 h-4" />
         )}
       </div>
       
-      <div className={`max-w-[85%] sm:max-w-[75%] ${message.isUser ? 'text-right' : 'text-left'}`}>
-        <div className={`inline-block p-3 sm:p-4 rounded-2xl shadow-sm ${
+      {/* Message Content */}
+      <div className={`max-w-[80%] ${message.isUser ? 'text-right' : 'text-left'}`}>
+        <div className={`inline-block px-4 py-3 rounded-2xl shadow-sm ${
           message.isUser
-            ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-br-md shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300'
-            : 'bg-white/90 backdrop-blur-sm text-gray-800 rounded-bl-md border border-gray-200/50 shadow-lg hover:shadow-xl transform hover:scale-[1.01] transition-all duration-300'
-        } animate-message-appear`}>
-          <div className="text-xs sm:text-sm leading-relaxed whitespace-pre-wrap">
+            ? 'bg-blue-600 text-white rounded-br-md'
+            : 'bg-white text-gray-800 rounded-bl-md border border-gray-200'
+        }`}>
+          <div className="text-sm leading-relaxed">
             {message.isUser ? message.text : formatMessage(message.text)}
           </div>
         </div>
-        <div className={`text-xs text-gray-500 mt-1 ${message.isUser ? 'text-right' : 'text-left'} animate-fade-in-delayed`}>
+        <div className={`text-xs text-gray-500 mt-1 ${message.isUser ? 'text-right' : 'text-left'}`}>
           {formatTime(message.timestamp)}
         </div>
       </div>
